@@ -1,0 +1,351 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check Existence for Q5
+      id: check_q5
+      uses: andstor/file-existence-action@v3
+      with:
+        files: task5.py
+
+    - name: Check Existence for Q6
+      id: check_q6
+      uses: andstor/file-existence-action@v3
+      with:
+        files: task6.py
+
+    - name: Run Q1 Test 1 
+      id: q1-test1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q1-test1
+        setup-command: 
+        command: 
+        input: |- 
+          abcdef
+          abc
+        expected-output: |-
+          True
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q1 Test 2 
+      id: q1-test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q1-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task1.py'
+        command: 'python lab4-task1.py'
+        input: |- 
+          abcdef
+          def
+        expected-output: |-
+          True
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q1 Test 3 
+      id: q1-test3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q1-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task1.py'
+        command: 'python lab4-task1.py'
+        input: |- 
+          abcdef
+          gh
+        expected-output: |-
+          False
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q2 Test 1 
+      id: q2-test1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q2-test1
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task2.py'
+        command: 'python lab4-task2.py'
+        input: |- 
+          [1, 2, 3]
+          [2, 1, 0]
+        expected-output: |-
+          [3, 2, 1]
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q2 Test 2 
+      id: q2-test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q2-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task2.py'
+        command: 'python lab4-task2.py'
+        input: |- 
+          [4, 5, 6, 7]
+          [1, 3, 0, 2]
+        expected-output: |-
+          [5, 7, 4, 6]
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q2 Test 3 
+      id: q2-test3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q2-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task2.py'
+        command: 'python lab4-task2.py'
+        input: |- 
+          [8, 9, 10]
+          [0, 1, 2]
+        expected-output: |-
+          [8, 9, 10]
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q3 Test 1 
+      id: q3-test1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q3-test1
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task3.py'
+        command: 'python lab4-task3.py'
+        input: |- 
+          [1, 2, 3, 4]
+        expected-output: |-
+          4
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q3 Test 2 
+      id: q3-test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q3-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task3.py'
+        command: 'python lab4-task3.py'
+        input: |- 
+          [5, 4, 3, 2]
+        expected-output: |-
+          1
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q3 Test 3 
+      id: q3-test3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q3-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task3.py'
+        command: 'python lab4-task3.py'
+        input: |- 
+          [1, 3, 2, 4, 6]
+        expected-output: |-
+          3
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q4 Test 1 
+      id: q4-test1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q4-test1
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task4.py'
+        command: 'python lab4-task4.py'
+        input: |- 
+          Hello World! This is a test.
+        expected-output: |-
+          olleh:WORLD!:siht:IS:a:TEST.
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q4 Test 2 
+      id: q4-test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q4-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task4.py'
+        command: 'python lab4-task4.py'
+        input: |- 
+          OpenAI
+        expected-output: |-
+          ianepo
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q4 Test 3 
+      id: q4-test3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q4-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task4.py'
+        command: 'python lab4-task4.py'
+        input: |- 
+          Three   spaces
+        expected-output: |-
+          eerht:::SPACES
+        comparison-method: exact
+        timeout: 10
+        max-score: 5
+
+    - name: Run Q5 Test 1 
+      id: q5-test1
+      if: steps.check_q5.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q5-test1
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task5.py'
+        command: 'python lab4-task5.py'
+        input: |- 
+          abracadabra
+          abra
+        expected-output: |-
+          ["", "cad", ""]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Run Q5 Test 2 
+      id: q5-test2
+      if: steps.check_q5.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q5-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task5.py'
+        command: 'python lab4-task5.py'
+        input: |- 
+          magic
+          xyz
+        expected-output: |-
+          ["magic"]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Run Q5 Test 3 
+      id: q5-test3
+      if: steps.check_q5.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q5-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task5.py'
+        command: 'python lab4-task5.py'
+        input: |- 
+          
+          ab
+        expected-output: |-
+          [""]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Run Q6 Test 1 
+      id: q6-test1
+      if: steps.check_q6.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q6-test1
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task6.py'
+        command: 'python lab4-task6.py'
+        input: |- 
+          [2, 9, 3, 1, 5, 0]
+        expected-output: |-
+          [9, 5, 3, 2, 1, 0]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Run Q6 Test 2 
+      id: q6-test2
+      if: steps.check_q6.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q6-test2
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task6.py'
+        command: 'python lab4-task6.py'
+        input: |- 
+          [9, 7, 5, 3, 1, 0]
+        expected-output: |-
+          [9, 7, 5, 3, 1, 0]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Run Q6 Test 3 
+      id: q6-test3
+      if: steps.check_q6.outputs.files_exists == 'true'
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q6-test3
+        setup-command: 'wget https://srworkspace.com/sharon/python/labs/lab4-task6.py'
+        command: 'python lab4-task6.py'
+        input: |- 
+          [4, 4, 2, 1, 2]
+        expected-output: |-
+          [4, 4, 2, 2, 1]
+        comparison-method: exact
+        timeout: 10
+        max-score: 0
+
+    - name: Autograding Reporter for Mandatory
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        Q1-TEST1_RESULTS: "${{steps.q1-test1.outputs.result}}"
+        Q1-TEST2_RESULTS: "${{steps.q1-test2.outputs.result}}"
+        Q1-TEST3_RESULTS: "${{steps.q1-test3.outputs.result}}"
+        Q2-TEST1_RESULTS: "${{steps.q2-test1.outputs.result}}"
+        Q2-TEST2_RESULTS: "${{steps.q2-test2.outputs.result}}"
+        Q2-TEST3_RESULTS: "${{steps.q2-test3.outputs.result}}"
+        Q3-TEST1_RESULTS: "${{steps.q3-test1.outputs.result}}"
+        Q3-TEST2_RESULTS: "${{steps.q3-test2.outputs.result}}"
+        Q3-TEST3_RESULTS: "${{steps.q3-test3.outputs.result}}"
+        Q4-TEST1_RESULTS: "${{steps.q4-test1.outputs.result}}"
+        Q4-TEST2_RESULTS: "${{steps.q4-test2.outputs.result}}"
+        Q4-TEST3_RESULTS: "${{steps.q4-test3.outputs.result}}"
+      with:
+        runners: q1-test1,q1-test2,q1-test3,q2-test1,q2-test2,q2-test3,q3-test1,q3-test2,q3-test3,q4-test1,q4-test2,q4-test3
+
+    - name: Autograding Reporter for Q5
+      uses: classroom-resources/autograding-grading-reporter@v1
+      if: steps.check_q5.outputs.files_exists == 'true'
+      env:
+        Q5-TEST1_RESULTS: "${{steps.q5-test1.outputs.result}}"
+        Q5-TEST2_RESULTS: "${{steps.q5-test2.outputs.result}}"
+        Q5-TEST3_RESULTS: "${{steps.q5-test3.outputs.result}}"
+      with:
+        runners: q5-test1,q5-test2,q5-test3
+
+    - name: Autograding Reporter for Q6
+      uses: classroom-resources/autograding-grading-reporter@v1
+      if: steps.check_q6.outputs.files_exists == 'true'
+      env:
+        Q6-TEST1_RESULTS: "${{steps.q6-test1.outputs.result}}"
+        Q6-TEST2_RESULTS: "${{steps.q6-test2.outputs.result}}"
+        Q6-TEST3_RESULTS: "${{steps.q6-test3.outputs.result}}"
+      with:
+        runners: q6-test1,q6-test2,q6-test3
+
